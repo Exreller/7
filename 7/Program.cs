@@ -9,6 +9,7 @@ namespace _7
         {
             Type = type;
         }
+        public abstract string type { get; }        
     }
     class Tableware : Product
     {
@@ -18,6 +19,13 @@ namespace _7
         {
             Type = type;                        
         }
+        public override string type
+        {
+            get
+            {
+                return product1;
+            }
+        }        
     }
     class Furniture : Product
     {
@@ -26,6 +34,13 @@ namespace _7
         public Furniture(string type) : base(type)
         {
             Type = type;
+        }
+        public override string type
+        {
+            get
+            {
+                return product1;
+            }
         }
     }
     abstract class Delivery
@@ -43,26 +58,21 @@ namespace _7
             get { return deliveryDate; }
             set { deliveryDate = value; }
         }
-        */
-        
+        */        
         public Delivery (string address, string deliveryDate)
         {
             this.address = address;
             this.deliveryDate = deliveryDate;
-        }
-        
+        }        
         public abstract void PrintDeliveryInfo();
     }
-
     class HomeDelivery : Delivery
     {
-        public string courier;
-        
+        public string courier;        
         public HomeDelivery (string address, string deliveryDate) : base (address, deliveryDate)
         {
             courier = "Александр";
-        }
-        
+        }        
         /*
         public string Courier
         {
@@ -75,13 +85,10 @@ namespace _7
             Console.WriteLine("Куръер {0} привезёт ваш заказ {1}\nПо адресу {2}", courier, deliveryDate, address);
         }
     }
-
     class PickPointDelivery : Delivery
     {
-        static readonly int storageTime = 48;
-        
-        public PickPointDelivery(string address, string deliveryDate) : base(address, deliveryDate) { }
-        
+        static readonly int storageTime = 48;        
+        public PickPointDelivery(string address, string deliveryDate) : base(address, deliveryDate) { }        
         /*
         public static int StorageTime
         {
@@ -94,11 +101,9 @@ namespace _7
             Console.WriteLine("Время хранения заказа {0} ч.", storageTime);
         }
     }
-
     class ShopDelivery : Delivery
     {
-        static readonly int storageTime = 72;
-        
+        static readonly int storageTime = 72;        
         public ShopDelivery(string address, string deliveryDate) : base(address, deliveryDate) { }
         /*
         public static int StorageTime
@@ -112,15 +117,15 @@ namespace _7
             Console.WriteLine("Время хранения заказа {0} ч.", storageTime);
         }
     }
-
-    class Order<TDelivery, TProduct> 
-        where TDelivery : Delivery
-        where TProduct : Product
+    class Order<TDelivery, TProduct>  where TDelivery : Delivery   where TProduct : Product
     {
-        public TDelivery Delivery;
-        public int Number;
+        public TDelivery Delivery;        
         public TProduct Description;
-
+        public Order(TDelivery delivery, TProduct description)
+        {
+            Delivery = delivery;
+            Description = description;
+        }
         public static bool InputChek2(string num, out int corrnum)
         {
             if (int.TryParse(num, out int intnum))
@@ -189,11 +194,8 @@ namespace _7
                     } while (InputChek2(stringnum, out intnum));
                     if(intnum == 1)
                     {
-                        Order<TDelivery, TProduct> order = new();
-                        Console.WriteLine("Введите адресс доставки:");
-                        order.Delivery.address = Console.ReadLine();
+                        Console.WriteLine("Введите адресс доставки:");                        
                         Delivery.address = Console.ReadLine();
-
                         Console.WriteLine("Введите желаемую дату доставки:");
                         
                         
@@ -232,10 +234,11 @@ namespace _7
         static void Main(string[] args)
         {
             // HomeDelivery delivery = new ("Андрей", "г. 2, ул. 1, квартира 555", "23.05.2022");
-            // delivery.PrintDeliveryInfo();
-            //Order<HomeDelivery> order = new ();
-            Order<Delivery, Tableware> order = new();
-            order.MakeOrder();
+            // delivery.PrintDeliveryInfo();            
+            //Order<Delivery, Tableware> order = new();
+            Delivery delivery = new Delivery();
+            Order<Delivery, Product> order = new ();
+
         }
     }
 }
