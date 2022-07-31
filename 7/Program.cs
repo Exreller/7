@@ -191,6 +191,7 @@ namespace _7
                     {
                         Order<TDelivery, TProduct> order = new();
                         Console.WriteLine("Введите адресс доставки:");
+                        // На этом шаге вылазиет исключение
                         order.Delivery.address = Console.ReadLine();
                         Delivery.address = Console.ReadLine();
 
